@@ -1,2 +1,11 @@
 # Cocktail
-test app
+
+# Development
+
+```bash
+cd ios && pod install
+```
+
+```bash
+yarn && yarn android
+```
