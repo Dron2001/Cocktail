@@ -1,22 +1,46 @@
 import React, { useEffect } from 'react'
-import { View, Text } from 'react-native'
+import { Text, SectionList, StyleSheet } from 'react-native'
 import { useDispatch, useSelector } from 'react-redux'
 import { getCocktails, getFilters } from '../../modules/actions'
+import { Cocktail } from '../../components'
 
 const Drinks = () => {
-  const state = useSelector(state => state.session)
+  const { cocktails = [], filters = [] } = useSelector(state => state.session)
   const dispatch = useDispatch()
 
   useEffect(() => {
-    dispatch(getCocktails('Ordinary Drink'))
     dispatch(getFilters())
   }, [])
 
+  useEffect(() => {
+    if (filters.length) {
+      dispatch(getCocktails(filters[0]))
+    }
+  }, [filters])
+
   return (
-    <View>
-      <Text>Drsinks</Text>
-    </View>
+    <SectionList
+      style={s.container}
+      sections={cocktails}
+      keyExtractor={item => item.strDrink}
+      initialNumToRender={10}
+      renderItem={({ item }) => <Cocktail {...item} />}
+      renderSectionHeader={({ section: { title } }) => <Text style={s.sectionTitle}>{title}</Text>}
+      onEndReached={() => console.log('end')}
+      removeClippedSubviews
+    />
   )
 }
+
+const s = StyleSheet.create({
+  container: {
+    padding: 20,
+  },
+  sectionTitle: {
+    fontSize: 14,
+    color: '#7E7E7E',
+    marginBottom: 20,
+  },
+})
 
 export default Drinks

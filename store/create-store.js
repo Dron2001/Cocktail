@@ -1,7 +1,7 @@
-import {applyMiddleware, compose, createStore} from 'redux';
-import thunk from 'redux-thunk';
-import persistStore from './persist-store';
-import persistReducer from './persist-reducers';
+import { applyMiddleware, compose, createStore } from 'redux'
+import thunk from 'redux-thunk'
+import persistStore from './persist-store'
+import persistReducer from './persist-reducers'
 
 export default function initStore(initialState = {}) {
   const middlewares = [thunk]
@@ -13,6 +13,6 @@ export default function initStore(initialState = {}) {
     compose(applyMiddleware(...middlewares), ...enhancers),
   )
 
-  const persistor = persistStore(store);
-  return { store, persistor };
+  const persistor = persistStore(store)
+  return { store, persistor }
 }
