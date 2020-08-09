@@ -11,7 +11,13 @@ export const sessionReducer = (state = sessionInitialState, action) => {
 
   switch (type) {
     case SESSION_GET_COCKTAILS:
-      return { ...state, cocktails: [ { title: payload.name, data: payload.drinks } ] }
+      const cocktail = state.cocktails.find(i => i.title === payload.name)
+
+      if (cocktail) {
+        return { ...state }
+      } else {
+        return { ...state, cocktails: [ ...state.cocktails, { title: payload.name, data: payload.drinks } ] }
+      }
     case SESSION_GET_FILTERS:
       return { ...state, filters: payload.drinks.map(i => i.strCategory) }
     case SESSION_SET_ACTIVE_FILTERS:

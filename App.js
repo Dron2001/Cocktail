@@ -26,6 +26,7 @@ const App = () => {
               name='Drinks'
               component={Drinks}
               options={({ navigation }) => ({
+                headerLeft: null,
                 headerRight: () => (
                   <TouchableOpacity onPress={() => navigation.push('Filters')} style={styles.button}>
                     <Image source={filter} />

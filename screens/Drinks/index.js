@@ -18,6 +18,12 @@ const Drinks = () => {
     }
   }, [filters])
 
+  const getNextCategories = () => {
+    if (cocktails.length === filters.length) return
+    const name = filters[cocktails.length]
+    dispatch(getCocktails(name))
+  }
+
   return (
     <SectionList
       style={s.container}
@@ -26,7 +32,7 @@ const Drinks = () => {
       initialNumToRender={10}
       renderItem={({ item }) => <Cocktail {...item} />}
       renderSectionHeader={({ section: { title } }) => <Text style={s.sectionTitle}>{title}</Text>}
-      onEndReached={() => console.log('end')}
+      onEndReached={getNextCategories}
       removeClippedSubviews
     />
   )
