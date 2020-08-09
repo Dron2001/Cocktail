@@ -5,22 +5,36 @@ import { getCocktails, getFilters } from '../../modules/actions'
 import { Cocktail } from '../../components'
 
 const Drinks = () => {
-  const { cocktails = [], filters = [] } = useSelector(state => state.session)
+  const { cocktails, filters, activeFilters } = useSelector(state => state.session)
   const dispatch = useDispatch()
 
   useEffect(() => {
-    dispatch(getFilters())
+    if (!filters.length) {
+      dispatch(getFilters())
+    }
   }, [])
 
   useEffect(() => {
     if (filters.length) {
-      dispatch(getCocktails(filters[0]))
+      if (activeFilters.length) {
+        dispatch(getCocktails(activeFilters[0])) 
+      } else {
+        dispatch(getCocktails(filters[0], true)) 
+      }
     }
-  }, [filters])
+  }, [filters, activeFilters])
 
   const getNextCategories = () => {
-    if (cocktails.length === filters.length) return
-    const name = filters[cocktails.length]
+    let name
+
+    if (activeFilters.length) {
+      if (cocktails.length === activeFilters.length) return
+      name = activeFilters[cocktails.length]
+    } else {
+      if (cocktails.length === filters.length) return
+      name = filters[cocktails.length]
+    }
+
     dispatch(getCocktails(name))
   }
 

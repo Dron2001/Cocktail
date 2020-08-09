@@ -5,8 +5,8 @@ import { NavigationContainer } from '@react-navigation/native'
 import { Provider } from 'react-redux'
 import { PersistGate } from 'redux-persist/lib/integration/react'
 import { createStackNavigator } from '@react-navigation/stack'
-import createStore from './store/create-store'
 
+import createStore from './store/create-store'
 import { Drinks, Filters } from './screens'
 import filter from './images/filter.png'
 
@@ -19,7 +19,7 @@ const { Navigator, Screen } = Stack
 const App = () => {
   return (
     <Provider store={store}>
-      <PersistGate loading={null} persistor={persistor}>
+      <PersistGate persistor={persistor}>
         <NavigationContainer>
           <Navigator>
             <Screen

@@ -6,7 +6,7 @@ import { Button } from '../../components'
 import check from '../../images/check.png'
 
 const Filters = ({ navigation }) => {
-  const { filters = [], activeFilters = [] } = useSelector(state => state.session)
+  const { filters, activeFilters } = useSelector(state => state.session)
   const [activeCategories, setActiveCategories] = useState(activeFilters)
   const dispatch = useDispatch()
 
@@ -17,9 +17,8 @@ const Filters = ({ navigation }) => {
 
   const setCategory = item => {
     let newFIlters = [...activeCategories]
-    const category = newFIlters.find(i => i === item)
 
-    if (category) {
+    if (newFIlters.find(i => i === item)) {
       newFIlters = newFIlters.filter(i => i !== item)
     } else {
       newFIlters.push(item)
